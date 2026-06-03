@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stopwatch — SCT_WD_2</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Background decoration -->
+  <div class="bg-ring ring-1"></div>
+  <div class="bg-ring ring-2"></div>
+  <div class="bg-ring ring-3"></div>
+
+  <div class="app">
+
+    <!-- Header -->
+    <header class="app-header">
+      <h1 class="app-title"><i class="fa-solid fa-stopwatch"></i> Stopwatch</h1>
+      <p class="app-sub">SCT_WD_2</p>
+    </header>
+
+    <!-- Clock Display -->
+    <section class="clock-section">
+      <div class="clock-wrap">
+        <!-- SVG progress ring -->
+        <svg class="progress-ring" viewBox="0 0 260 260">
+          <circle class="ring-track" cx="130" cy="130" r="118" />
+          <circle class="ring-fill" id="ringFill" cx="130" cy="130" r="118" />
+        </svg>
+
+        <div class="clock-inner">
+          <div class="time-display">
+            <span id="minutes">00</span>
+            <span class="colon" id="colonDot">:</span>
+            <span id="seconds">00</span>
+          </div>
+          <div class="ms-display"><span id="milliseconds">00</span></div>
+          <div class="status-label" id="statusLabel">Ready</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Controls -->
+    <section class="controls">
+      <button class="ctrl-btn btn-lap" id="lapBtn" disabled title="Lap">
+        <i class="fa-solid fa-flag"></i>
+        <span>Lap</span>
+      </button>
+
+      <button class="ctrl-btn btn-main" id="mainBtn" title="Start">
+        <i class="fa-solid fa-play" id="mainIcon"></i>
+      </button>
+
+      <button class="ctrl-btn btn-reset" id="resetBtn" disabled title="Reset">
+        <i class="fa-solid fa-rotate-left"></i>
+        <span>Reset</span>
+      </button>
+    </section>
+
+    <!-- Laps Section -->
+    <section class="laps-section" id="lapsSection">
+      <div class="laps-header">
+        <h2>Lap Times</h2>
+        <div class="laps-meta">
+          <span id="lapCount">0 laps</span>
+          <button class="clear-btn" id="clearLapsBtn" style="display:none">
+            <i class="fa-solid fa-trash-can"></i> Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- Lap column headers -->
+      <div class="lap-columns">
+        <span>Lap</span>
+        <span>Split</span>
+        <span>Total</span>
+      </div>
+
+      <div class="laps-list" id="lapList">
+        <div class="empty-state">
+          <i class="fa-regular fa-clock"></i>
+          <p>No laps recorded yet.<br/>Hit <strong>Lap</strong> while running.</p>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /app -->
+
+  <script src="script.js"></script>
+</body>
+</html>
