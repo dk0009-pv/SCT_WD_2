@@ -221,7 +221,7 @@ While building this project, I practiced:
 
 Clone the repository:
 
-git clone https://github.com/your-username/SCT_WD_2.git
+git clone https://github.com/dk0009-pv/SCT_WD_2.git
 
 Open the project folder:
 
