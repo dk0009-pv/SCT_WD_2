@@ -1,8 +1,3 @@
-/* ═══════════════════════════════════════
-   SCT_WD_2 — Stopwatch  |  style.css
-═══════════════════════════════════════ */
-
-/* ── Variables ── */
 :root {
   --bg:           #07070f;
   --bg2:          #0d0d1e;
@@ -24,7 +19,6 @@
   --transition:   0.25s cubic-bezier(0.4,0,0.2,1);
 }
 
-/* ── Reset ── */
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body {
@@ -39,7 +33,6 @@ body {
   overflow-x: hidden;
 }
 
-/* ── Background rings ── */
 .bg-ring {
   position: fixed;
   border-radius: 50%;
@@ -52,7 +45,6 @@ body {
 .ring-2 { width: 900px; height: 900px; border-color: rgba(0,212,255,0.04); }
 .ring-3 { width: 1200px; height: 1200px; border-color: rgba(124,111,255,0.02); }
 
-/* ── App container ── */
 .app {
   width: 100%;
   max-width: 480px;
@@ -61,7 +53,6 @@ body {
   gap: 2rem;
 }
 
-/* ── Header ── */
 .app-header { text-align: center; padding-top: 1rem; }
 .app-title {
   font-size: 1.5rem;
@@ -76,7 +67,6 @@ body {
 .app-title i { color: var(--accent); }
 .app-sub { font-size: 0.75rem; color: var(--muted); margin-top: 4px; letter-spacing: 0.1em; }
 
-/* ── Clock section ── */
 .clock-section {
   display: flex;
   justify-content: center;
@@ -88,7 +78,6 @@ body {
   height: 260px;
 }
 
-/* SVG progress ring */
 .progress-ring {
   width: 100%;
   height: 100%;
@@ -104,15 +93,12 @@ body {
   stroke: url(#ringGradient);
   stroke-width: 6;
   stroke-linecap: round;
-  stroke-dasharray: 741;   /* 2π × 118 */
+  stroke-dasharray: 741;   
   stroke-dashoffset: 741;
   transition: stroke-dashoffset 0.1s linear;
   filter: drop-shadow(0 0 8px var(--accent));
 }
 
-/* Inject SVG gradient via CSS trick — done in JS */
-
-/* Clock inner content */
 .clock-inner {
   position: absolute;
   inset: 0;
@@ -184,7 +170,6 @@ body {
 .ctrl-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 .ctrl-btn:not(:disabled):active { transform: scale(0.94); }
 
-/* Side buttons (Lap, Reset) */
 .btn-lap,
 .btn-reset {
   width: 70px;
@@ -205,7 +190,6 @@ body {
 .btn-lap:not(:disabled):hover  { background: var(--surface-h); color: var(--accent); border-color: var(--accent); }
 .btn-reset:not(:disabled):hover { background: var(--surface-h); color: var(--red); border-color: var(--red); }
 
-/* Main play/pause button */
 .btn-main {
   width: 88px;
   height: 88px;
@@ -226,7 +210,6 @@ body {
   box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
-/* ── Laps section ── */
 .laps-section {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -277,7 +260,6 @@ body {
 }
 .clear-btn:hover { background: rgba(255,92,92,0.2); }
 
-/* Column headers */
 .lap-columns {
   display: grid;
   grid-template-columns: 80px 1fr 1fr;
@@ -295,7 +277,6 @@ body {
 }
 .lap-columns span:first-child { text-align: left; }
 
-/* Lap list */
 .laps-list {
   max-height: 320px;
   overflow-y: auto;
@@ -306,7 +287,6 @@ body {
 .laps-list::-webkit-scrollbar { width: 4px; }
 .laps-list::-webkit-scrollbar-thumb { background: rgba(124,111,255,0.3); border-radius: 2px; }
 
-/* Empty state */
 .empty-state {
   text-align: center;
   padding: 2.5rem 1rem;
@@ -320,7 +300,6 @@ body {
 .empty-state p { font-size: 0.85rem; line-height: 1.6; }
 .empty-state strong { color: var(--accent); }
 
-/* Individual lap row */
 .lap-row {
   display: grid;
   grid-template-columns: 80px 1fr 1fr;
@@ -374,7 +353,6 @@ body {
 .lap-row.best  .lap-total { color: var(--green); }
 .lap-row.worst .lap-total { color: var(--red); }
 
-/* ── Responsive ── */
 @media (max-width: 400px) {
   .clock-wrap { width: 220px; height: 220px; }
   .time-display { font-size: 3rem; }
