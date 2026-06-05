@@ -1,17 +1,11 @@
-/* ═══════════════════════════════════════
-   SCT_WD_2 — Stopwatch  |  script.js
-═══════════════════════════════════════ */
-
-/* ── State ── */
 let running     = false;
-let startTime   = 0;       // Date.now() when last started
-let elapsed     = 0;       // accumulated ms before last pause
-let lapElapsed  = 0;       // accumulated ms for current lap
-let lapStart    = 0;       // Date.now() when current lap started
-let rafId       = null;    // requestAnimationFrame id
-let laps        = [];      // array of {num, split, total}
+let startTime   = 0;      
+let elapsed     = 0;      
+let lapElapsed  = 0;      
+let lapStart    = 0;      
+let rafId       = null;    
+let laps        = [];     
 
-/* ── DOM refs ── */
 const minEl     = document.getElementById('minutes');
 const secEl     = document.getElementById('seconds');
 const msEl      = document.getElementById('milliseconds');
@@ -26,7 +20,6 @@ const lapCount  = document.getElementById('lapCount');
 const clearBtn  = document.getElementById('clearLapsBtn');
 const ringFill  = document.getElementById('ringFill');
 
-/* ── Inject SVG gradient (can't do inside external CSS for SVG fills) ── */
 const svgEl = document.querySelector('.progress-ring');
 const defs  = document.createElementNS('http://www.w3.org/2000/svg','defs');
 defs.innerHTML = `
@@ -35,19 +28,15 @@ defs.innerHTML = `
     <stop offset="100%" stop-color="#00d4ff"/>
   </linearGradient>`;
 svgEl.prepend(defs);
-// Fix ring fill to use the gradient
+
 ringFill.setAttribute('stroke','url(#ringGradient)');
 
-/* ── Ring constants ── */
-const RING_CIRCUMFERENCE = 2 * Math.PI * 118; // ≈ 741.4
-const RING_CYCLE_MS      = 60000;              // ring completes per 60s cycle
+const RING_CIRCUMFERENCE = 2 * Math.PI * 118; 
+const RING_CYCLE_MS      = 60000;             
 
-/* ── Format helpers ── */
-/**
- * Format milliseconds into { min, sec, ms } strings (zero-padded)
- */
+
 function fmtParts(ms) {
-  const totalCs = Math.floor(ms / 10);          // centiseconds
+  const totalCs = Math.floor(ms / 10);          
   const min     = Math.floor(totalCs / 6000);
   const sec     = Math.floor((totalCs % 6000) / 100);
   const cs      = totalCs % 100;
@@ -58,28 +47,22 @@ function fmtParts(ms) {
   };
 }
 
-/**
- * Return formatted string like "02:34.56"
- */
 function fmtFull(ms) {
   const p = fmtParts(ms);
   return `${p.min}:${p.sec}.${p.cs}`;
 }
 
-/* ── Update the clock display ── */
 function updateDisplay(ms) {
   const p = fmtParts(ms);
   minEl.textContent = p.min;
   secEl.textContent = p.sec;
   msEl.textContent  = p.cs;
 
-  // Progress ring — cycles every 60 seconds
   const progress = (ms % RING_CYCLE_MS) / RING_CYCLE_MS;
   const offset   = RING_CIRCUMFERENCE * (1 - progress);
   ringFill.style.strokeDashoffset = offset;
 }
 
-/* ── Animation loop ── */
 function tick() {
   const now     = Date.now();
   const totalMs = elapsed + (now - startTime);
@@ -87,13 +70,11 @@ function tick() {
   rafId = requestAnimationFrame(tick);
 }
 
-/* ── START / PAUSE ── */
 function startStop() {
   if (!running) {
-    // — Start —
     running   = true;
     startTime = Date.now();
-    if (lapStart === 0) lapStart = startTime; // first start
+    if (lapStart === 0) lapStart = startTime; 
 
     rafId = requestAnimationFrame(tick);
 
@@ -107,7 +88,6 @@ function startStop() {
     lapBtn.disabled   = false;
     resetBtn.disabled = false;
   } else {
-    // — Pause —
     running = false;
     elapsed += Date.now() - startTime;
     lapElapsed += Date.now() - lapStart;
@@ -124,7 +104,6 @@ function startStop() {
   }
 }
 
-/* ── LAP ── */
 function recordLap() {
   if (!running) return;
 
@@ -134,14 +113,12 @@ function recordLap() {
 
   laps.unshift({ num: laps.length + 1, split: splitMs, total: totalMs });
 
-  // Reset lap timer
   lapElapsed = 0;
   lapStart   = now;
 
   renderLaps();
 }
 
-/* ── RESET ── */
 function reset() {
   running = false;
   cancelAnimationFrame(rafId);
@@ -168,7 +145,6 @@ function reset() {
   renderLaps();
 }
 
-/* ── RENDER LAP LIST ── */
 function renderLaps() {
   const count = laps.length;
   lapCount.textContent = `${count} lap${count !== 1 ? 's' : ''}`;
@@ -183,7 +159,6 @@ function renderLaps() {
     return;
   }
 
-  // Find best & worst split times (only meaningful with 2+ laps)
   const splits  = laps.map(l => l.split);
   const minSplit = Math.min(...splits);
   const maxSplit = Math.max(...splits);
@@ -209,15 +184,13 @@ function renderLaps() {
   }).join('');
 }
 
-/* ── CLEAR LAPS ── */
 function clearLaps() {
   laps = [];
   renderLaps();
 }
 
-/* ── Keyboard shortcuts ── */
 document.addEventListener('keydown', e => {
-  // Ignore if typing in an input
+
   if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
   switch (e.code) {
@@ -234,12 +207,10 @@ document.addEventListener('keydown', e => {
   }
 });
 
-/* ── Event listeners ── */
 mainBtn.addEventListener('click', startStop);
 lapBtn.addEventListener('click', recordLap);
 resetBtn.addEventListener('click', reset);
 clearBtn.addEventListener('click', clearLaps);
 
-/* ── Init ── */
 updateDisplay(0);
 renderLaps();
